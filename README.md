@@ -1,23 +1,22 @@
-# Replit-blog
+# firebase-blog
 
 A solo-author static blog built with Astro, Sveltia CMS, Pagefind search and Giscus
-comments — the fifth in a set of independent sibling blogs, each with its own visual
-design and its own content:
+comments — one of a set of independent sibling blogs, each with its own visual design
+and its own content:
 
 - GitHub Pages blog — warm serif, rounded cards
 - GitLab Pages blog — same family as above, independent content
 - Cloudflare Pages blog — cool, flat, technical, monospace labels
 - Netlify blog — its own distinct design, independent content
 - vzero-blog (Vercel, via v0.app) — sidebar nav, numbered reading list, violet accent
-- **Replit-blog (this project)** — retro terminal/CRT: a floating "window" with
+- **firebase-blog (this project)** — retro terminal/CRT: a floating "window" with
   traffic-light dots, monospace throughout, posts that read like `cat <slug>.md`
 
-**Repo:** [CreativeDigitalGrowth/Replit-blog](https://github.com/CreativeDigitalGrowth/Replit-blog)
-on GitHub. **Hosting: Firebase Hosting**, not Replit, despite the name — Replit's free
-tier expires after 30 days and Render (tried next) requires card verification even for
-free static hosting. See [CLAUDE.md](CLAUDE.md) for the Firebase setup steps (needs your
-own Google login, can't be done from an assistant session) and the placeholder values
-still left to fill in once it's live.
+**Repo:** [CreativeDigitalGrowth/firebase-blog](https://github.com/CreativeDigitalGrowth/firebase-blog)
+on GitHub. **Hosting: Firebase Hosting** — landed here after Replit (30-day free-tier
+expiry) and Render (requires card verification) didn't work out; see [CLAUDE.md](CLAUDE.md)
+for the setup steps (needs your own Google login, can't be done from an assistant
+session) and the placeholder values still left to fill in once it's live.
 
 ## Quick start
 

@@ -5,16 +5,16 @@ comments — the same proven scaffold as the sibling GitHub Pages, GitLab Pages,
 Pages, Netlify and vzero-blog (Vercel) projects, but its own codebase, content and visual
 design going forward.
 
-**Repo:** pushed to `CreativeDigitalGrowth/Replit-blog` on GitHub (`main`).
+**Repo:** [CreativeDigitalGrowth/firebase-blog](https://github.com/CreativeDigitalGrowth/firebase-blog)
+on GitHub (`main`). **Hosting: Firebase Hosting** — its free Spark plan needs no card at
+all for static Hosting (only Cloud Functions/Blaze require billing). See `firebase.json`
+and "Placeholders to fill in" below before this ships.
 
-**Hosting: Firebase Hosting, not Replit**, despite the project's name. It was originally
-scaffolded for a Replit Static Deployment, but Replit's free-tier published apps expire
-after 30 days without a paid plan. Render was tried next but requires credit card
-verification even for its free static-site tier — a dead end for a user without a card
-— so the target moved to Firebase Hosting instead: its free Spark plan needs no card at
-all for static Hosting (only Cloud Functions/Blaze require billing). The name is being
-kept as-is; it is history, not a hosting description. See `firebase.json` and
-"Placeholders to fill in" below before this ships.
+This project's name and hosting have moved twice: scaffolded for a Replit Static
+Deployment (as `Replit-blog`) whose free tier expires after 30 days, tried Render next
+(free but requires credit card verification — a dead end without one), landed on
+Firebase Hosting and was renamed `firebase-blog` to match. If anything still says
+"Replit" or "Render", it's stale — flag it.
 
 ## Design language
 
@@ -51,7 +51,7 @@ npm install --no-save --force @astrojs/compiler-binding-wasm32-wasi
 ## Editing content
 
 The CMS at `/admin/` uses the GitHub backend — **"Sign In Using Access Token"** with a
-fine-grained PAT scoped to `CreativeDigitalGrowth/Replit-blog` (same pattern as the
+fine-grained PAT scoped to `CreativeDigitalGrowth/firebase-blog` (same pattern as the
 sibling Cloudflare/vzero blogs; **not** "Sign In with GitHub", which hangs — see the
 Cloudflare blog's `docs/troubleshooting.md`). Saving is a commit to `main`, which
 triggers the Firebase Hosting GitHub Action once that is set up (see below) — deploying
@@ -83,7 +83,7 @@ no access to. Steps, in order:
 2. Replace the placeholder in `.firebaserc` with the real project ID.
 3. `npm install -g firebase-tools`, then `firebase login`.
 4. From this directory: `firebase init hosting:github`. Point it at
-   `CreativeDigitalGrowth/Replit-blog`, branch `main`. This is the step that actually
+   `CreativeDigitalGrowth/firebase-blog`, branch `main`. This is the step that actually
    wires up automatic deploys — it creates a GCP service account, stores it as a GitHub
    Actions secret on the repo, and **generates the deploy workflow file itself**
    (`.github/workflows/firebase-hosting-merge.yml`). Prefer letting the CLI generate
@@ -133,9 +133,9 @@ the vzero-blog sibling in production. Keep it absolute.
 Nothing here works "by accident" — these are deliberately fake values, not bugs:
 
 - `.firebaserc` — the real Firebase project ID, once created
-- `astro.config.mjs` — `site: 'https://replit-blog.example.com'`
+- `astro.config.mjs` — `site: 'https://firebase-blog.example.com'`
 - `public/admin/config.yml` — `site_url`, `display_url` (`backend.repo` is already
-  correct: `CreativeDigitalGrowth/Replit-blog`)
+  correct: `CreativeDigitalGrowth/firebase-blog`)
 - `public/robots.txt` — the `Sitemap:` line
 - `src/consts.ts` — `GISCUS.repo` (empty; Giscus needs a public GitHub repo with
   Discussions enabled — the repo already exists, Discussions does not need enabling yet),

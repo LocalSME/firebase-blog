@@ -9,7 +9,7 @@ import sitemap from '@astrojs/sitemap';
 // real domain. src/lib/url.ts mediates every internal link, so the site can move under
 // a sub-path (or a different domain) later by changing `site`/`base` here alone.
 export default defineConfig({
-  site: 'https://replit-blog.example.com',
+  site: 'https://firebase-blog.example.com',
   trailingSlash: 'always',
   integrations: [
     sitemap({

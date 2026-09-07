@@ -5,4 +5,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://replit-blog.example.com/sitemap-index.xml
+Sitemap: https://firebase-blog.example.com/sitemap-index.xml
