@@ -7,14 +7,15 @@ design and its own content:
 - GitHub Pages blog — warm serif, rounded cards
 - GitLab Pages blog — same family as above, independent content
 - Cloudflare Pages blog — cool, flat, technical, monospace labels
+- Netlify blog — its own distinct design, independent content
 - vzero-blog (Vercel, via v0.app) — sidebar nav, numbered reading list, violet accent
 - **Replit-blog (this project)** — retro terminal/CRT: a floating "window" with
   traffic-light dots, monospace throughout, posts that read like `cat <slug>.md`
 
-**Status: local-only.** There is no remote git repo and no deployed host yet — this is
-scaffolded and working on this machine only. See [CLAUDE.md](CLAUDE.md) for the full
-list of placeholder values (site URL, CMS backend repo, Giscus, socials) to fill in
-before it ships anywhere, and a note on the unverified `.replit` config.
+**Repo:** [CreativeDigitalGrowth/Replit-blog](https://github.com/CreativeDigitalGrowth/Replit-blog)
+on GitHub. **Hosting: Render**, not Replit, despite the name — see [CLAUDE.md](CLAUDE.md)
+for why, and for the placeholder values (site URL, Giscus, socials) still left to fill in
+once Render assigns this project's real domain.
 
 ## Quick start
 

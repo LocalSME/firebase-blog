@@ -1,12 +1,14 @@
 # Sveltia CMS configuration.
 #
-# This project has no real GitHub repo behind `backend.repo` yet, and no deployed
-# `site_url` — placeholders below. Update them together, in one pass, once a repo and
-# a Replit deployment exist:
-#   1. backend.repo below -> the real "<owner>/<repo>" once the repo is created.
-#   2. site_url / display_url below -> the real deployed *.replit.app (or custom) origin.
-#   3. astro.config.mjs `site` -> the same origin.
-#   4. src/consts.ts GISCUS.repo -> the same repo, once Discussions is enabled on it.
+# backend.repo below is already correct (CreativeDigitalGrowth/Replit-blog exists on
+# GitHub). site_url/display_url are still placeholders -- this project targets Render
+# (render.yaml at the project root), not Replit, despite the name; see CLAUDE.md.
+# Update these together, in one pass, once Render assigns a real domain:
+#   1. site_url / display_url below -> the real deployed *.onrender.com (or custom) origin.
+#   2. astro.config.mjs `site` -> the same origin.
+#   3. public/robots.txt's Sitemap line -> the same origin.
+#   4. src/consts.ts GISCUS.repo -> CreativeDigitalGrowth/Replit-blog, once Discussions
+#      is enabled on it.
 #
 # Auth: GitHub backend with fine-grained Personal Access Token login (same pattern as
 # the sibling Cloudflare/vzero blogs).

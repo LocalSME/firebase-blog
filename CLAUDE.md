@@ -2,9 +2,17 @@
 
 A solo-author static blog: Astro 7 + TypeScript, Sveltia CMS, Pagefind search, Giscus
 comments — the same proven scaffold as the sibling GitHub Pages, GitLab Pages, Cloudflare
-Pages and vzero-blog (Vercel) projects, but its own codebase, content and visual design
-going forward. **Local-only for now**: no remote git repo, no deployed host, no real
-domain. See "Placeholders to fill in" below before this ever ships.
+Pages, Netlify and vzero-blog (Vercel) projects, but its own codebase, content and visual
+design going forward.
+
+**Repo:** pushed to `CreativeDigitalGrowth/Replit-blog` on GitHub (`main`).
+
+**Hosting: Render, not Replit**, despite the project's name. It was originally scaffolded
+for a Replit Static Deployment, but Replit's free-tier published apps expire after 30
+days without a paid plan — the user chose to move hosting to Render instead (free,
+permanent, dashboard Git integration) rather than pay to keep Replit running. The name
+is being kept as-is; it is history, not a hosting description. See `render.yaml` and
+"Placeholders to fill in" below before this ships.
 
 ## Design language
 
@@ -38,13 +46,18 @@ After every `npm install` or `npm ci`:
 npm install --no-save --force @astrojs/compiler-binding-wasm32-wasi
 ```
 
-## Editing content before a real repo exists
+## Editing content
 
-The CMS at `/admin/` needs a real git host to commit to for its normal GitHub-backed
-login. Until this project has one, use the **local backend** instead — Sveltia's
-`local_backend: true` (already set in `public/admin/config.yml`) lets it read and write
-this working copy directly through the browser's File System Access API (Chromium-based
-browsers only):
+The CMS at `/admin/` uses the GitHub backend — **"Sign In Using Access Token"** with a
+fine-grained PAT scoped to `CreativeDigitalGrowth/Replit-blog` (same pattern as the
+sibling Cloudflare/vzero blogs; **not** "Sign In with GitHub", which hangs — see the
+Cloudflare blog's `docs/troubleshooting.md`). Saving is a commit to `main`, which Render
+picks up automatically once the site is connected there.
+
+Locally, `local_backend: true` (set in `public/admin/config.yml`) is also available —
+lets Sveltia read and write this working copy directly through the browser's File
+System Access API (Chromium-based browsers only), for editing without every save
+reaching the live site immediately:
 
 ```bash
 npm run dev
@@ -53,13 +66,14 @@ npm run dev
 Open **http://localhost:4321/admin/index.html** (the explicit filename is required in
 dev) and choose **"Work with Local Repository"**.
 
-## `.replit`: best-effort, not verified
+## Deploying to Render
 
-The `.replit` file at the project root was written without access to a live Repl to
-test against — it is a reasonable starting point (dev-server run command bound to
-`0.0.0.0`, a Static Deployment target building `dist/`), not a guaranteed-correct
-config. Confirm it actually works once this is imported into Replit, and adjust in
-Replit's own Deployments UI rather than assuming the file is authoritative.
+`render.yaml` at the project root is a Render Blueprint — import this repo on Render via
+**New +** -> **Blueprint** and the build command (`npm run build`) and publish directory
+(`dist`) are filled in automatically; **New +** -> **Static Site** with those same two
+fields by hand works identically if a Blueprint import isn't preferred. Written without
+access to a live Render account to verify against, same caveat as anything else here
+that couldn't be tested end-to-end — confirm the first deploy actually succeeds.
 
 ## Rules that are easy to get wrong
 
@@ -100,15 +114,16 @@ the vzero-blog sibling in production. Keep it absolute.
 Nothing here works "by accident" — these are deliberately fake values, not bugs:
 
 - `astro.config.mjs` — `site: 'https://replit-blog.example.com'`
-- `public/admin/config.yml` — `backend.repo`, `site_url`, `display_url`
+- `public/admin/config.yml` — `site_url`, `display_url` (`backend.repo` is already
+  correct: `CreativeDigitalGrowth/Replit-blog`)
 - `public/robots.txt` — the `Sitemap:` line
 - `src/consts.ts` — `GISCUS.repo` (empty; Giscus needs a public GitHub repo with
-  Discussions enabled), `SOCIAL_LINKS` (empty), `AUTHOR_NAME`/`AUTHOR_BIO`/`AUTHOR_EMAIL`
-  (still template defaults)
-- `.replit` — confirm against a real Repl, see above
+  Discussions enabled — the repo already exists, Discussions does not need enabling yet),
+  `SOCIAL_LINKS` (empty), `AUTHOR_NAME`/`AUTHOR_BIO`/`AUTHOR_EMAIL` (still template
+  defaults)
 
-Update the site-URL-shaped ones together in one pass once a git host and a deploy target
-are chosen.
+Update the site-URL-shaped ones together in one pass once Render assigns this project's
+real `*.onrender.com` (or custom) domain.
 
 ## Before calling a change done
 
@@ -125,5 +140,5 @@ two.
 
 https://docs.astro.build — [Routing](https://docs.astro.build/en/guides/routing/),
 [Content collections](https://docs.astro.build/en/guides/content-collections/),
-[Images](https://docs.astro.build/en/guides/images/). Replit deployments:
-https://docs.replit.com/cloud-services/deployments/about-deployments.
+[Images](https://docs.astro.build/en/guides/images/). Render static sites:
+https://render.com/docs/static-sites.

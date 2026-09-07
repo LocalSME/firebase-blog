@@ -1,4 +1,5 @@
-# Placeholder — update the host below once this project is deployed (see README.md).
+# Placeholder — update the host below once this project is deployed to Render
+# (see CLAUDE.md).
 
 User-agent: *
 Allow: /
