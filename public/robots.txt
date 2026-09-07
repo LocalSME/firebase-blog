@@ -1,0 +1,7 @@
+# Placeholder — update the host below once this project is deployed (see README.md).
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+Sitemap: https://replit-blog.example.com/sitemap-index.xml

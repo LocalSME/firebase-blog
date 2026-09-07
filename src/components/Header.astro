@@ -1,0 +1,47 @@
+---
+// Renders as the "window" chrome for the whole site: a titlebar with traffic-light
+// dots and a fake shell prompt, plus a bracket-style tab row underneath. See
+// .window / .titlebar / .site-nav in global.css, and BaseLayout.astro for how this
+// wraps the rest of the page as a single floating terminal window.
+import { SITE_TITLE, FEATURES } from '../consts';
+import { withBase } from '../lib/url';
+import ThemeToggle from './ThemeToggle.astro';
+
+// Entries whose feature flag is off are dropped — the pages they point at are not
+// generated, so linking to them would 404.
+const nav = [
+  { label: 'blog', href: '/blog/', enabled: true },
+  { label: 'about', href: '/about/', enabled: FEATURES.about },
+  { label: 'search', href: '/search/', enabled: FEATURES.search },
+  { label: 'contact', href: '/contact/', enabled: FEATURES.contact },
+].filter((item) => item.enabled);
+
+// Trailing-slash-insensitive comparison so /blog/2/ still highlights "blog".
+const here = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isCurrent = (href: string) => {
+  const target = withBase(href).replace(/\/+$/, '') || '/';
+  return here === target || here.startsWith(`${target}/`);
+};
+
+const slug = SITE_TITLE.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+---
+
+<header class="titlebar">
+  <div class="titlebar-row">
+    <span class="dots" aria-hidden="true"><i class="dot dot-r"></i><i class="dot dot-y"></i><i class="dot dot-g"></i></span>
+    <a class="brand" href={withBase('/')}>
+      <span class="path">guest@{slug}</span><span class="path-sep">:~$</span> whoami
+    </a>
+    <ThemeToggle />
+  </div>
+
+  <nav class="site-nav" aria-label="Primary">
+    {
+      nav.map((item) => (
+        <a href={withBase(item.href)} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>

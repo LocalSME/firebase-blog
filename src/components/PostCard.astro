@@ -1,0 +1,51 @@
+---
+import type { Post } from '../lib/posts';
+import { postPath } from '../lib/posts';
+import { slugify, withBase } from '../lib/url';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, description, date, category, tags } = post.data;
+const href = withBase(postPath(post));
+---
+
+<li class="post-row">
+  <p class="cmd-line">
+    <span class="prompt" aria-hidden="true">$</span>
+    <a class="cmd" href={href}>
+      cat {post.id}.md
+      <span class="visually-hidden"> — {title}</span>
+    </a>
+  </p>
+
+  <p class="meta">
+    <a class="pill pill-accent" href={withBase(`/category/${slugify(category)}/`)}>{category}</a>
+    <FormattedDate date={date} />
+  </p>
+
+  <p class="card-excerpt">{description}</p>
+
+  {
+    tags.length > 0 && (
+      <ul class="tag-list">
+        {tags.map((tag) => (
+          <li>
+            <a class="pill" href={withBase(`/tag/${slugify(tag)}/`)}>
+              #{tag}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  <p class="card-footer">
+    <a class="read-more" href={href}>
+      open<span class="visually-hidden"> {title}</span>
+    </a>
+  </p>
+</li>
