@@ -1,10 +1,11 @@
 # Sveltia CMS configuration.
 #
 # backend.repo below is already correct (CreativeDigitalGrowth/Replit-blog exists on
-# GitHub). site_url/display_url are still placeholders -- this project targets Render
-# (render.yaml at the project root), not Replit, despite the name; see CLAUDE.md.
-# Update these together, in one pass, once Render assigns a real domain:
-#   1. site_url / display_url below -> the real deployed *.onrender.com (or custom) origin.
+# GitHub). site_url/display_url are still placeholders -- this project targets Firebase
+# Hosting (firebase.json + .firebaserc at the project root), not Replit, despite the
+# name; see CLAUDE.md for the account setup steps. Update these together, in one pass,
+# once Firebase assigns a real domain:
+#   1. site_url / display_url below -> the real deployed *.web.app (or custom) origin.
 #   2. astro.config.mjs `site` -> the same origin.
 #   3. public/robots.txt's Sitemap line -> the same origin.
 #   4. src/consts.ts GISCUS.repo -> CreativeDigitalGrowth/Replit-blog, once Discussions

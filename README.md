@@ -13,9 +13,11 @@ design and its own content:
   traffic-light dots, monospace throughout, posts that read like `cat <slug>.md`
 
 **Repo:** [CreativeDigitalGrowth/Replit-blog](https://github.com/CreativeDigitalGrowth/Replit-blog)
-on GitHub. **Hosting: Render**, not Replit, despite the name — see [CLAUDE.md](CLAUDE.md)
-for why, and for the placeholder values (site URL, Giscus, socials) still left to fill in
-once Render assigns this project's real domain.
+on GitHub. **Hosting: Firebase Hosting**, not Replit, despite the name — Replit's free
+tier expires after 30 days and Render (tried next) requires card verification even for
+free static hosting. See [CLAUDE.md](CLAUDE.md) for the Firebase setup steps (needs your
+own Google login, can't be done from an assistant session) and the placeholder values
+still left to fill in once it's live.
 
 ## Quick start
 

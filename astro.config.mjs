@@ -2,12 +2,12 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Targeting a Render static site (render.yaml at the project root) — not Replit,
-// despite the project's name; see CLAUDE.md. Not deployed there yet, so `site` is a
-// placeholder; update it together with public/admin/config.yml's site_url/display_url
-// and public/robots.txt's Sitemap line once Render assigns a real domain.
-// src/lib/url.ts mediates every internal link, so the site can move under a sub-path
-// (or a different domain) later by changing `site`/`base` here alone.
+// Targeting Firebase Hosting (firebase.json + .firebaserc at the project root) — not
+// Replit, despite the project's name; see CLAUDE.md. Not deployed there yet, so `site`
+// is a placeholder; update it together with public/admin/config.yml's
+// site_url/display_url and public/robots.txt's Sitemap line once Firebase assigns a
+// real domain. src/lib/url.ts mediates every internal link, so the site can move under
+// a sub-path (or a different domain) later by changing `site`/`base` here alone.
 export default defineConfig({
   site: 'https://replit-blog.example.com',
   trailingSlash: 'always',

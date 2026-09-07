@@ -7,11 +7,13 @@ design going forward.
 
 **Repo:** pushed to `CreativeDigitalGrowth/Replit-blog` on GitHub (`main`).
 
-**Hosting: Render, not Replit**, despite the project's name. It was originally scaffolded
-for a Replit Static Deployment, but Replit's free-tier published apps expire after 30
-days without a paid plan — the user chose to move hosting to Render instead (free,
-permanent, dashboard Git integration) rather than pay to keep Replit running. The name
-is being kept as-is; it is history, not a hosting description. See `render.yaml` and
+**Hosting: Firebase Hosting, not Replit**, despite the project's name. It was originally
+scaffolded for a Replit Static Deployment, but Replit's free-tier published apps expire
+after 30 days without a paid plan. Render was tried next but requires credit card
+verification even for its free static-site tier — a dead end for a user without a card
+— so the target moved to Firebase Hosting instead: its free Spark plan needs no card at
+all for static Hosting (only Cloud Functions/Blaze require billing). The name is being
+kept as-is; it is history, not a hosting description. See `firebase.json` and
 "Placeholders to fill in" below before this ships.
 
 ## Design language
@@ -51,8 +53,9 @@ npm install --no-save --force @astrojs/compiler-binding-wasm32-wasi
 The CMS at `/admin/` uses the GitHub backend — **"Sign In Using Access Token"** with a
 fine-grained PAT scoped to `CreativeDigitalGrowth/Replit-blog` (same pattern as the
 sibling Cloudflare/vzero blogs; **not** "Sign In with GitHub", which hangs — see the
-Cloudflare blog's `docs/troubleshooting.md`). Saving is a commit to `main`, which Render
-picks up automatically once the site is connected there.
+Cloudflare blog's `docs/troubleshooting.md`). Saving is a commit to `main`, which
+triggers the Firebase Hosting GitHub Action once that is set up (see below) — deploying
+is then the same "save in CMS → live" flow every sibling blog has.
 
 Locally, `local_backend: true` (set in `public/admin/config.yml`) is also available —
 lets Sveltia read and write this working copy directly through the browser's File
@@ -66,14 +69,30 @@ npm run dev
 Open **http://localhost:4321/admin/index.html** (the explicit filename is required in
 dev) and choose **"Work with Local Repository"**.
 
-## Deploying to Render
+## Deploying to Firebase Hosting
 
-`render.yaml` at the project root is a Render Blueprint — import this repo on Render via
-**New +** -> **Blueprint** and the build command (`npm run build`) and publish directory
-(`dist`) are filled in automatically; **New +** -> **Static Site** with those same two
-fields by hand works identically if a Blueprint import isn't preferred. Written without
-access to a live Render account to verify against, same caveat as anything else here
-that couldn't be tested end-to-end — confirm the first deploy actually succeeds.
+`firebase.json` (public dir `dist`, `trailingSlash: true` to match
+`astro.config.mjs`'s `trailingSlash: 'always'` — the same class of bug the
+`/admin/config.yml` absolute-path fix addressed on Vercel) and `.firebaserc`
+(placeholder project ID) are committed, but **the account-side setup cannot be done
+from here** — it needs the user's own Google/Firebase login, which this environment has
+no access to. Steps, in order:
+
+1. Create a Firebase project at <https://console.firebase.google.com> (Spark/free plan
+   — no card needed for Hosting).
+2. Replace the placeholder in `.firebaserc` with the real project ID.
+3. `npm install -g firebase-tools`, then `firebase login`.
+4. From this directory: `firebase init hosting:github`. Point it at
+   `CreativeDigitalGrowth/Replit-blog`, branch `main`. This is the step that actually
+   wires up automatic deploys — it creates a GCP service account, stores it as a GitHub
+   Actions secret on the repo, and **generates the deploy workflow file itself**
+   (`.github/workflows/firebase-hosting-merge.yml`). Prefer letting the CLI generate
+   that file over hand-writing one; it gets the secret name and project ID right by
+   construction. Double-check the generated workflow's Node version is ≥22 (Astro 7's
+   requirement) — the CLI's default may be older.
+5. Confirm a push to `main` (or a CMS save) triggers the Action and the site goes live.
+
+Not yet done as of this commit — nothing here has been deployed or verified end to end.
 
 ## Rules that are easy to get wrong
 
@@ -113,6 +132,7 @@ the vzero-blog sibling in production. Keep it absolute.
 
 Nothing here works "by accident" — these are deliberately fake values, not bugs:
 
+- `.firebaserc` — the real Firebase project ID, once created
 - `astro.config.mjs` — `site: 'https://replit-blog.example.com'`
 - `public/admin/config.yml` — `site_url`, `display_url` (`backend.repo` is already
   correct: `CreativeDigitalGrowth/Replit-blog`)
@@ -122,8 +142,8 @@ Nothing here works "by accident" — these are deliberately fake values, not bug
   `SOCIAL_LINKS` (empty), `AUTHOR_NAME`/`AUTHOR_BIO`/`AUTHOR_EMAIL` (still template
   defaults)
 
-Update the site-URL-shaped ones together in one pass once Render assigns this project's
-real `*.onrender.com` (or custom) domain.
+Update the site-URL-shaped ones together in one pass once Firebase assigns this
+project's real `*.web.app` / `*.firebaseapp.com` (or custom) domain.
 
 ## Before calling a change done
 
@@ -140,5 +160,5 @@ two.
 
 https://docs.astro.build — [Routing](https://docs.astro.build/en/guides/routing/),
 [Content collections](https://docs.astro.build/en/guides/content-collections/),
-[Images](https://docs.astro.build/en/guides/images/). Render static sites:
-https://render.com/docs/static-sites.
+[Images](https://docs.astro.build/en/guides/images/). Firebase Hosting + GitHub:
+https://firebase.google.com/docs/hosting/github-integration.

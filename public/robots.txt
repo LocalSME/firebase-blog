@@ -1,5 +1,5 @@
-# Placeholder — update the host below once this project is deployed to Render
-# (see CLAUDE.md).
+# Placeholder — update the host below once this project is deployed to Firebase
+# Hosting (see CLAUDE.md).
 
 User-agent: *
 Allow: /
