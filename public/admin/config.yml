@@ -22,7 +22,7 @@
 
 backend:
   name: github
-  repo: CreativeDigitalGrowth/replit-blog
+  repo: CreativeDigitalGrowth/Replit-blog
   branch: main
 
 # Commit straight to `branch` rather than opening editorial-workflow PRs.
