@@ -2,14 +2,12 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// Targeting Firebase Hosting (firebase.json + .firebaserc at the project root) — not
-// Replit, despite the project's name; see CLAUDE.md. Not deployed there yet, so `site`
-// is a placeholder; update it together with public/admin/config.yml's
-// site_url/display_url and public/robots.txt's Sitemap line once Firebase assigns a
-// real domain. src/lib/url.ts mediates every internal link, so the site can move under
-// a sub-path (or a different domain) later by changing `site`/`base` here alone.
+// Deployed via Firebase Hosting (firebase.json + .firebaserc at the project root),
+// project creativedigitalgrowth-d830c. src/lib/url.ts mediates every internal link, so
+// the site can move under a sub-path (or a custom domain) later by changing
+// `site`/`base` here alone.
 export default defineConfig({
-  site: 'https://firebase-blog.example.com',
+  site: 'https://creativedigitalgrowth-d830c.firebaseapp.com',
   trailingSlash: 'always',
   integrations: [
     sitemap({

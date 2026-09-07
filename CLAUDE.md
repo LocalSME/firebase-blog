@@ -71,18 +71,19 @@ dev) and choose **"Work with Local Repository"**.
 
 ## Deploying to Firebase Hosting
 
-`firebase.json` (public dir `dist`, `trailingSlash: true` to match
-`astro.config.mjs`'s `trailingSlash: 'always'` — the same class of bug the
-`/admin/config.yml` absolute-path fix addressed on Vercel) and `.firebaserc`
-(placeholder project ID) are committed, but **the account-side setup cannot be done
-from here** — it needs the user's own Google/Firebase login, which this environment has
-no access to. Steps, in order:
+**Project created: `creativedigitalgrowth-d830c`**, live origin
+`https://creativedigitalgrowth-d830c.firebaseapp.com/` — already set as `.firebaserc`'s
+default project and `astro.config.mjs`'s `site`. `firebase.json` (public dir `dist`,
+`trailingSlash: true` to match `astro.config.mjs`'s `trailingSlash: 'always'` — the same
+class of bug the `/admin/config.yml` absolute-path fix addressed on Vercel) is committed
+too.
 
-1. Create a Firebase project at <https://console.firebase.google.com> (Spark/free plan
-   — no card needed for Hosting).
-2. Replace the placeholder in `.firebaserc` with the real project ID.
-3. `npm install -g firebase-tools`, then `firebase login`.
-4. From this directory: `firebase init hosting:github`. Point it at
+**Not yet actually deployed** — hitting the URL returns Firebase's own "Site Not Found"
+page ("You haven't deployed an app yet"), confirmed 2026-09-07. Remaining steps, which
+need the user's own Google/Firebase login and can't be done from here:
+
+1. `npm install -g firebase-tools`, then `firebase login`.
+2. From this directory: `firebase init hosting:github`. Point it at
    `CreativeDigitalGrowth/firebase-blog`, branch `main`. This is the step that actually
    wires up automatic deploys — it creates a GCP service account, stores it as a GitHub
    Actions secret on the repo, and **generates the deploy workflow file itself**
@@ -90,9 +91,12 @@ no access to. Steps, in order:
    that file over hand-writing one; it gets the secret name and project ID right by
    construction. Double-check the generated workflow's Node version is ≥22 (Astro 7's
    requirement) — the CLI's default may be older.
-5. Confirm a push to `main` (or a CMS save) triggers the Action and the site goes live.
+3. Confirm a push to `main` (or a CMS save) triggers the Action and the site goes live.
 
-Not yet done as of this commit — nothing here has been deployed or verified end to end.
+Alternatively, a one-off `firebase deploy --only hosting` (after `npm run build`) would
+get *something* live immediately without setting up the GitHub Action, but every
+sibling blog's whole point is "save in CMS → live automatically" — worth doing the
+GitHub integration properly rather than a manual deploy that has to be repeated by hand.
 
 ## Rules that are easy to get wrong
 
@@ -132,18 +136,16 @@ the vzero-blog sibling in production. Keep it absolute.
 
 Nothing here works "by accident" — these are deliberately fake values, not bugs:
 
-- `.firebaserc` — the real Firebase project ID, once created
-- `astro.config.mjs` — `site: 'https://firebase-blog.example.com'`
-- `public/admin/config.yml` — `site_url`, `display_url` (`backend.repo` is already
-  correct: `CreativeDigitalGrowth/firebase-blog`)
-- `public/robots.txt` — the `Sitemap:` line
 - `src/consts.ts` — `GISCUS.repo` (empty; Giscus needs a public GitHub repo with
   Discussions enabled — the repo already exists, Discussions does not need enabling yet),
   `SOCIAL_LINKS` (empty), `AUTHOR_NAME`/`AUTHOR_BIO`/`AUTHOR_EMAIL` (still template
   defaults)
 
-Update the site-URL-shaped ones together in one pass once Firebase assigns this
-project's real `*.web.app` / `*.firebaseapp.com` (or custom) domain.
+Everything site-URL-shaped (`.firebaserc`, `astro.config.mjs`, `public/admin/
+config.yml`'s `site_url`/`display_url`, `public/robots.txt`'s `Sitemap:` line) is
+already filled in with the real project (`creativedigitalgrowth-d830c`) — if Firebase
+later assigns a custom domain instead, update all of those together in one pass, the
+same way this set was filled in.
 
 ## Before calling a change done
 

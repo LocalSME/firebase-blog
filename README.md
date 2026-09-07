@@ -13,10 +13,12 @@ and its own content:
   traffic-light dots, monospace throughout, posts that read like `cat <slug>.md`
 
 **Repo:** [CreativeDigitalGrowth/firebase-blog](https://github.com/CreativeDigitalGrowth/firebase-blog)
-on GitHub. **Hosting: Firebase Hosting** — landed here after Replit (30-day free-tier
-expiry) and Render (requires card verification) didn't work out; see [CLAUDE.md](CLAUDE.md)
-for the setup steps (needs your own Google login, can't be done from an assistant
-session) and the placeholder values still left to fill in once it's live.
+on GitHub. **Hosting: Firebase Hosting**, project `creativedigitalgrowth-d830c`
+(`https://creativedigitalgrowth-d830c.firebaseapp.com/`) — landed here after Replit
+(30-day free-tier expiry) and Render (requires card verification) didn't work out. The
+project exists but nothing is deployed to it yet; see [CLAUDE.md](CLAUDE.md) for the
+remaining `firebase init hosting:github` step (needs your own Google login, can't be
+done from an assistant session).
 
 ## Quick start
 
