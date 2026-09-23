@@ -1,7 +1,7 @@
 /**
  * Single place to edit the blog's identity. Nothing else hardcodes these values.
  */
-export const SITE_TITLE = 'Creative Digital Growth';
+export const SITE_TITLE = 'LocalSME';
 export const SITE_DESCRIPTION =
   'A small, fast, hand-built blog about the things worth writing down.';
 

@@ -5,7 +5,7 @@ comments — the same proven scaffold as the sibling GitHub Pages, GitLab Pages,
 Pages, Netlify and vzero-blog (Vercel) projects, but its own codebase, content and visual
 design going forward.
 
-**Repo:** [CreativeDigitalGrowth/firebase-blog](https://github.com/CreativeDigitalGrowth/firebase-blog)
+**Repo:** [LocalSME/firebase-blog](https://github.com/LocalSME/firebase-blog)
 on GitHub (`main`). **Hosting: Firebase Hosting** — its free Spark plan needs no card at
 all for static Hosting (only Cloud Functions/Blaze require billing). See `firebase.json`
 and "Placeholders to fill in" below before this ships.
@@ -19,7 +19,7 @@ Firebase Hosting and was renamed `firebase-blog` to match. If anything still say
 ## Design language
 
 A retro terminal / CRT. The whole site renders as one floating "window" — traffic-light
-dots, a fake `guest@creative-digital-growth:~$` prompt for a title — on a darker desktop
+dots, a fake `guest@localsme:~$` prompt for a title — on a darker desktop
 backdrop, monospace throughout (JetBrains Mono; VT323 only for the glowing `<h1>`), a
 faint CRT scanline overlay, and posts that read like `cat <slug>.md` shell commands with
 comment-style (`#`) meta lines. Deliberately different from every sibling: not the warm
@@ -51,7 +51,7 @@ npm install --no-save --force @astrojs/compiler-binding-wasm32-wasi
 ## Editing content
 
 The CMS at `/admin/` uses the GitHub backend — **"Sign In Using Access Token"** with a
-fine-grained PAT scoped to `CreativeDigitalGrowth/firebase-blog` (same pattern as the
+fine-grained PAT scoped to `LocalSME/firebase-blog` (same pattern as the
 sibling Cloudflare/vzero blogs; **not** "Sign In with GitHub", which hangs — see the
 Cloudflare blog's `docs/troubleshooting.md`). Saving is a commit to `main`, which
 triggers the Firebase Hosting GitHub Action once that is set up (see below) — deploying
@@ -71,27 +71,34 @@ dev) and choose **"Work with Local Repository"**.
 
 ## Deploying to Firebase Hosting
 
-**Project created: `creativedigitalgrowth-d830c`**, live origin
-`https://creativedigitalgrowth-d830c.firebaseapp.com/` — already set as `.firebaserc`'s
-default project and `astro.config.mjs`'s `site`. `firebase.json` (public dir `dist`,
-`trailingSlash: true` to match `astro.config.mjs`'s `trailingSlash: 'always'` — the same
-class of bug the `/admin/config.yml` absolute-path fix addressed on Vercel) is committed
-too.
+**No real Firebase project has been created for this blog yet.** Every site-URL-shaped
+value (`.firebaserc`'s default project, `astro.config.mjs`'s `site`,
+`public/admin/config.yml`'s `site_url`/`display_url`, `public/robots.txt`'s `Sitemap:`
+line, and the two `.github/workflows/firebase-hosting-*.yml` files) currently uses the
+placeholder project id `localsme-blog` (`https://localsme-blog.firebaseapp.com/`) — a
+real Firebase project only gets an opaque id suffix (e.g. `-a1b2c`) once one is
+actually created. `firebase.json` (public dir `dist`, `trailingSlash: true` to match
+`astro.config.mjs`'s `trailingSlash: 'always'` — the same class of bug the
+`/admin/config.yml` absolute-path fix addressed on Vercel) is committed too.
 
-**Not yet actually deployed** — hitting the URL returns Firebase's own "Site Not Found"
-page ("You haven't deployed an app yet"), confirmed 2026-09-07. Remaining steps, which
-need the user's own Google/Firebase login and can't be done from here:
+Remaining steps, which need the user's own Google/Firebase login and can't be done from
+here:
 
 1. `npm install -g firebase-tools`, then `firebase login`.
-2. From this directory: `firebase init hosting:github`. Point it at
-   `CreativeDigitalGrowth/firebase-blog`, branch `main`. This is the step that actually
-   wires up automatic deploys — it creates a GCP service account, stores it as a GitHub
-   Actions secret on the repo, and **generates the deploy workflow file itself**
-   (`.github/workflows/firebase-hosting-merge.yml`). Prefer letting the CLI generate
-   that file over hand-writing one; it gets the secret name and project ID right by
-   construction. Double-check the generated workflow's Node version is ≥22 (Astro 7's
-   requirement) — the CLI's default may be older.
-3. Confirm a push to `main` (or a CMS save) triggers the Action and the site goes live.
+2. Create the real Firebase project (Console or `firebase projects:create`), then from
+   this directory run `firebase init hosting:github`. Point it at
+   `LocalSME/firebase-blog`, branch `main`. This is the step that actually wires up
+   automatic deploys — it creates a GCP service account, stores it as a GitHub Actions
+   secret on the repo, and **generates the deploy workflow file itself**
+   (`.github/workflows/firebase-hosting-merge.yml`), overwriting the placeholder one
+   committed here. Prefer letting the CLI generate that file over hand-writing one; it
+   gets the secret name and project ID right by construction. Double-check the
+   generated workflow's Node version is ≥22 (Astro 7's requirement) — the CLI's default
+   may be older.
+3. Once the real project id is known, update every placeholder `localsme-blog`
+   reference listed above to the real id (and real `.firebaseapp.com` origin, or a
+   custom domain) in one pass.
+4. Confirm a push to `main` (or a CMS save) triggers the Action and the site goes live.
 
 Alternatively, a one-off `firebase deploy --only hosting` (after `npm run build`) would
 get *something* live immediately without setting up the GitHub Action, but every
@@ -142,10 +149,11 @@ Nothing here works "by accident" — these are deliberately fake values, not bug
   defaults)
 
 Everything site-URL-shaped (`.firebaserc`, `astro.config.mjs`, `public/admin/
-config.yml`'s `site_url`/`display_url`, `public/robots.txt`'s `Sitemap:` line) is
-already filled in with the real project (`creativedigitalgrowth-d830c`) — if Firebase
-later assigns a custom domain instead, update all of those together in one pass, the
-same way this set was filled in.
+config.yml`'s `site_url`/`display_url`, `public/robots.txt`'s `Sitemap:` line, and the
+two `.github/workflows/firebase-hosting-*.yml` files) currently uses the placeholder
+project id `localsme-blog` — no real Firebase project has been created yet. Once one is
+(or Firebase assigns a custom domain instead), update all of those together in one
+pass, the same way this placeholder set was filled in.
 
 ## Before calling a change done
 

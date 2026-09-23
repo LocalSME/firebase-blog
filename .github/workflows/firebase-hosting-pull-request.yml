@@ -20,5 +20,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CREATIVEDIGITALGROWTH_D830C }}
-          projectId: creativedigitalgrowth-d830c
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_LOCALSME_BLOG }}
+          projectId: localsme-blog

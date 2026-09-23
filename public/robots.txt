@@ -1,8 +1,9 @@
-# Placeholder — update the host below once this project is deployed to Firebase
-# Hosting (see CLAUDE.md).
+# Placeholder — update the host below once this project is deployed to a real Firebase
+# Hosting project (see CLAUDE.md). Currently uses the placeholder project id
+# localsme-blog.
 
 User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://creativedigitalgrowth-d830c.firebaseapp.com/sitemap-index.xml
+Sitemap: https://localsme-blog.firebaseapp.com/sitemap-index.xml
