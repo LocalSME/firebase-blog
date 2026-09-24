@@ -71,39 +71,24 @@ dev) and choose **"Work with Local Repository"**.
 
 ## Deploying to Firebase Hosting
 
-**No real Firebase project has been created for this blog yet.** Every site-URL-shaped
-value (`.firebaserc`'s default project, `astro.config.mjs`'s `site`,
-`public/admin/config.yml`'s `site_url`/`display_url`, `public/robots.txt`'s `Sitemap:`
-line, and the two `.github/workflows/firebase-hosting-*.yml` files) currently uses the
-placeholder project id `localsme-blog` (`https://localsme-blog.firebaseapp.com/`) — a
-real Firebase project only gets an opaque id suffix (e.g. `-a1b2c`) once one is
-actually created. `firebase.json` (public dir `dist`, `trailingSlash: true` to match
+**Real Firebase project: `localsmework`** (`https://localsmework.firebaseapp.com/`).
+`firebase init hosting:github` was run against `LocalSME/firebase-blog`, branch
+`main` — it created a GCP service account and stored it as the repo secret
+`FIREBASE_SERVICE_ACCOUNT_LOCALSMEWORK`, and regenerated
+`.github/workflows/firebase-hosting-*.yml` to reference `projectId: localsmework` and
+that secret. Every other site-URL-shaped value (`.firebaserc`'s default project,
+`astro.config.mjs`'s `site`, `public/admin/config.yml`'s `site_url`/`display_url`,
+`public/robots.txt`'s `Sitemap:` line) was updated to match in the same pass.
+`firebase.json` (public dir `dist`, `trailingSlash: true` to match
 `astro.config.mjs`'s `trailingSlash: 'always'` — the same class of bug the
 `/admin/config.yml` absolute-path fix addressed on Vercel) is committed too.
 
-Remaining steps, which need the user's own Google/Firebase login and can't be done from
-here:
+A separate, older Firebase project named `localsme` also exists on this account and is
+unrelated to this repo — don't confuse the two when running `firebase` CLI commands
+here; `.firebaserc` pins this repo to `localsmework` specifically.
 
-1. `npm install -g firebase-tools`, then `firebase login`.
-2. Create the real Firebase project (Console or `firebase projects:create`), then from
-   this directory run `firebase init hosting:github`. Point it at
-   `LocalSME/firebase-blog`, branch `main`. This is the step that actually wires up
-   automatic deploys — it creates a GCP service account, stores it as a GitHub Actions
-   secret on the repo, and **generates the deploy workflow file itself**
-   (`.github/workflows/firebase-hosting-merge.yml`), overwriting the placeholder one
-   committed here. Prefer letting the CLI generate that file over hand-writing one; it
-   gets the secret name and project ID right by construction. Double-check the
-   generated workflow's Node version is ≥22 (Astro 7's requirement) — the CLI's default
-   may be older.
-3. Once the real project id is known, update every placeholder `localsme-blog`
-   reference listed above to the real id (and real `.firebaseapp.com` origin, or a
-   custom domain) in one pass.
-4. Confirm a push to `main` (or a CMS save) triggers the Action and the site goes live.
-
-Alternatively, a one-off `firebase deploy --only hosting` (after `npm run build`) would
-get *something* live immediately without setting up the GitHub Action, but every
-sibling blog's whole point is "save in CMS → live automatically" — worth doing the
-GitHub integration properly rather than a manual deploy that has to be repeated by hand.
+A push to `main` (or a CMS save) triggers the Action and deploys automatically — no
+manual `firebase deploy` needed going forward.
 
 ## Rules that are easy to get wrong
 
@@ -150,10 +135,9 @@ Nothing here works "by accident" — these are deliberately fake values, not bug
 
 Everything site-URL-shaped (`.firebaserc`, `astro.config.mjs`, `public/admin/
 config.yml`'s `site_url`/`display_url`, `public/robots.txt`'s `Sitemap:` line, and the
-two `.github/workflows/firebase-hosting-*.yml` files) currently uses the placeholder
-project id `localsme-blog` — no real Firebase project has been created yet. Once one is
-(or Firebase assigns a custom domain instead), update all of those together in one
-pass, the same way this placeholder set was filled in.
+two `.github/workflows/firebase-hosting-*.yml` files) now points at the real project
+id `localsmework`. If a custom domain is added later, update all of those together in
+one pass, the same way this placeholder set was filled in.
 
 ## Before calling a change done
 

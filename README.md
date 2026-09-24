@@ -13,13 +13,11 @@ and its own content:
   traffic-light dots, monospace throughout, posts that read like `cat <slug>.md`
 
 **Repo:** [LocalSME/firebase-blog](https://github.com/LocalSME/firebase-blog)
-on GitHub. **Hosting: Firebase Hosting** — no real Firebase project has been created for
-this blog yet, so every site-URL-shaped value uses the placeholder project id
-`localsme-blog` (`https://localsme-blog.firebaseapp.com/`; a real project only gets an
-opaque id suffix once one is actually created) — landed on Firebase Hosting after Replit
-(30-day free-tier expiry) and Render (requires card verification) didn't work out. See
-[CLAUDE.md](CLAUDE.md) for the remaining `firebase init hosting:github` step (needs your
-own Google login, can't be done from an assistant session).
+on GitHub. **Hosting: Firebase Hosting** — real project id `localsmework`
+(`https://localsmework.firebaseapp.com/`) — landed on Firebase Hosting after Replit
+(30-day free-tier expiry) and Render (requires card verification) didn't work out. A
+push to `main` triggers automatic deploy via the GitHub Action set up with
+`firebase init hosting:github`. See [CLAUDE.md](CLAUDE.md) for details.
 
 ## Quick start
 

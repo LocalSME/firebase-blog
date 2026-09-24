@@ -1,9 +1,5 @@
-# Placeholder — update the host below once this project is deployed to a real Firebase
-# Hosting project (see CLAUDE.md). Currently uses the placeholder project id
-# localsme-blog.
-
 User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://localsme-blog.firebaseapp.com/sitemap-index.xml
+Sitemap: https://localsmework.firebaseapp.com/sitemap-index.xml
